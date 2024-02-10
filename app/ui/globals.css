@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: white;
+  --foreground-light: #e7e7e7;
+  --background: #f22f31;
+  --accent-blue: #00a4e9;
+  --accent-yellow: #fec202;
+  --accent-pink: #ff0061;
+}
+
+.skew {
+  transform: skewY(2deg);
+}
+
+.checkered-background {
+  background-image: linear-gradient(to right, #fffffff0, #fffffff0),
+    linear-gradient(to right, black 50%, white 50%),
+    linear-gradient(to bottom, black 50%, white 50%);
+  background-blend-mode: normal, difference, normal;
+  background-size: 2em 2em;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.button-red:before {
+  content: " ";
+  color: transparent;
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border: 2px solid var(--background);
+  border-radius: 10px;
+}
+
+.button-white:before {
+  content: " ";
+  color: transparent;
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border: 2px solid var(--foreground);
+  border-radius: 10px;
+}
+
+.button-blue:before {
+  content: " ";
+  color: transparent;
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border: 2px solid var(--accent-blue);
+  border-radius: 10px;
+}
+
+.button-yellow:before {
+  content: " ";
+  color: transparent;
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border: 2px solid var(--accent-yellow);
+  border-radius: 10px;
+}
+
+.button-pink:before {
+  content: " ";
+  color: transparent;
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border: 2px solid var(--accent-pink);
+  border-radius: 10px;
+}
+
+.button-black:before {
+  content: " ";
+  color: transparent;
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
