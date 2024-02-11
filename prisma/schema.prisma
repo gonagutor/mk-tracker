@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// PREDEFINED DATA
+model Driver {
+  id         String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name       String @db.VarChar(255)
+  full_image String
+  icon       String
+}
+
+model Kart {
+  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name  String  @db.VarChar(255)
+  Score Score[]
+}
+
+model Wheel {
+  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name  String  @db.VarChar(255)
+  Score Score[]
+}
+
+model Wing {
+  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name  String  @db.VarChar(255)
+  Score Score[]
+}
+
+model Cup {
+  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name String @db.VarChar(255)
+  icon String
+
+  maps     String[]
+  mapIcons String[]
+
+  match Match[]
+}
+
+// USER DATA
+model Score {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+
+  user  User  @relation(fields: [userId], references: [id])
+  kart  Kart  @relation(fields: [kartId], references: [id])
+  wheel Wheel @relation(fields: [wheelId], references: [id])
+  wing  Wing  @relation(fields: [wingId], references: [id])
+
+  userId  String @db.Uuid
+  kartId  String @db.Uuid
+  wheelId String @db.Uuid
+  wingId  String @db.Uuid
+
+  Match   Match  @relation(fields: [matchId], references: [id])
+  matchId String @db.Uuid
+}
+
+model Match {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+
+  cup   Cup    @relation(fields: [cupId], references: [id])
+  cupId String @db.Uuid
+
+  scores     Score[]
+  difficulty Int
+}
+
+model User {
+  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name String @db.VarChar(255)
+
+  scores Score[]
+}
