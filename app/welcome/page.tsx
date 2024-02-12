@@ -1,14 +1,16 @@
-import React from "react";
-import constants from "../lib/constants";
+"use client";
+
+import React, { useState } from "react";
+import { NAME_KEY } from "@/lib/constants";
 
 export default function Welcome() {
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
   const onLogin: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    localStorage.setItem(constants.NAME_KEY, name);
+    localStorage.setItem(NAME_KEY, name);
   };
 
   return (
@@ -29,7 +31,7 @@ export default function Welcome() {
           type="password"
           placeholder="**********"
           value={password}
-          onChange={(e) => e.target.value}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <button type="submit" />

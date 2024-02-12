@@ -18,18 +18,21 @@ model Driver {
 model Kart {
   id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name  String  @db.VarChar(255)
+  icon  String
   Score Score[]
 }
 
 model Wheel {
   id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name  String  @db.VarChar(255)
+  icon  String
   Score Score[]
 }
 
 model Wing {
   id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name  String  @db.VarChar(255)
+  icon  String
   Score Score[]
 }
 
