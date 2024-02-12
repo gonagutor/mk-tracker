@@ -37,7 +37,7 @@ const karts = [
   {
     id: "a69e17d4-7213-4e69-8db8-0f3438af6b35",
     name: "Recorreciudades",
-    icon: "/assets/karts/cirty-tripper.webp"
+    icon: "/assets/karts/city-tripper.webp"
   },
   {
     id: "079c75b1-79c9-419a-9f1b-26735b90ddf0",
@@ -122,7 +122,7 @@ const karts = [
   {
     id: "97fe7839-8a48-49c5-8618-72c1313d1a40",
     name: "Splatbuggy",
-    icon: "/assets/karts/splatbuggy.webp"
+    icon: "/assets/karts/splat-buggy.webp"
   },
   {
     id: "62453c61-0dd0-4f93-a198-371fb8ac2241",
@@ -132,7 +132,7 @@ const karts = [
   {
     id: "ce68b470-84d4-40d8-8d5d-ed8b48a926c6",
     name: "Coupé",
-    icon: "/assets/karts/sport-coupe.webp"
+    icon: "/assets/karts/sports-coupe.webp"
   },
   {
     id: "981bcdcd-e281-4b38-884a-17046623393a",

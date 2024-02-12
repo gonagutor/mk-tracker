@@ -11,7 +11,7 @@ async function seedDrivers() {
   const insertedDrivers = await Promise.all(
     drivers.map((driver) => prisma.driver.upsert({
       where: { id: driver.id },
-      update: {},
+      update: {...driver },
       create: { ...driver },
     }))
   )
@@ -23,7 +23,7 @@ async function seedWings() {
   const insertedWings = await Promise.all(
     wings.map((wing) => prisma.wing.upsert({
       where: { id: wing.id },
-      update: {},
+      update: {...wing },
       create: { ...wing },
     }))
   )
@@ -35,7 +35,7 @@ async function seedKarts() {
   const insertedKarts = await Promise.all(
     karts.map((kart) => prisma.kart.upsert({
       where: { id: kart.id },
-      update: {},
+      update: {...kart },
       create: { ...kart },
     }))
   )
@@ -47,7 +47,7 @@ async function seedWheels() {
   const insertedWheels = await Promise.all(
     wheels.map((wheel) => prisma.wheel.upsert({
       where: { id: wheel.id },
-      update: {},
+      update: {...wheel },
       create: { ...wheel },
     }))
   )
