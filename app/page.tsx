@@ -1,12 +1,11 @@
 "use client";
 
 import getUser from "@/lib/actions/getUser";
-import { USER_KEY } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import { Chart } from "react-chartjs-2";
+import useProtected from "./ui/hooks/useProtected";
 
 const Podium = ({
   name,
@@ -68,17 +67,7 @@ const CharacterKartDisplay = () => {
 };
 
 export default function Home() {
-  const router = useRouter();
-  useEffect(() => {
-    const userId = localStorage.getItem(USER_KEY);
-    if (!userId) router.replace("/welcome");
-
-    getUser(userId!)
-      .then(() => {
-        // Get user stats and position
-      })
-      .catch(() => router.replace("/welcome"));
-  });
+  const userId = useProtected();
 
   return (
     <main className="flex flex-col p-2 gap-2">

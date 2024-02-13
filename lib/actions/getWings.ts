@@ -1,8 +1,9 @@
 "use server";
-import { PrismaClient } from "@prisma/client";
+
+import prisma from "@/lib/prisma";
 
 export default async function getWings() {
-  const prisma = new PrismaClient();
+  if (!prisma) throw new Error("No se ha podido conectar con la base de datos");
   const wings = await prisma.wing.findMany();
 
   return wings;

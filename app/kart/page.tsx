@@ -8,8 +8,10 @@ import getWheels from "@/lib/actions/getWheels";
 import getKarts from "@/lib/actions/getKarts";
 import Selector from "@/app/ui/components/Selector";
 import { KART_KEY, WHEEL_KEY, WING_KEY } from "@/lib/constants";
+import useProtected from "../ui/hooks/useProtected";
 
 export default function KartSelect() {
+  useProtected();
   const router = useRouter();
 
   const [wings, setWings] = useState<Array<Kart>>();

@@ -8,8 +8,10 @@ import { DRIVER_KEY } from "@/lib/constants";
 import getDrivers from "@/lib/actions/getDrivers";
 import Loader from "@/app/ui/components/Loader";
 import SearchBox from "@/app/ui/components/SearchBox";
+import useProtected from "../ui/hooks/useProtected";
 
 export default function CharacterSelect() {
+  useProtected();
   const router = useRouter();
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [selectedDriver, setSelectedDriver] = useState<Driver>();
