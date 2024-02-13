@@ -1,4 +1,4 @@
-export const NAME_KEY = "NAME";
+export const TOKEN_KEY = "TOKEN";
 export const DRIVER_KEY = "DRIVER";
 export const KART_KEY = "KART";
 export const WING_KEY = "WING";
