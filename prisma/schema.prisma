@@ -13,26 +13,31 @@ model Driver {
   name       String @db.VarChar(255)
   full_image String
   icon       String
+
+  Score Score[]
 }
 
 model Kart {
-  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name  String  @db.VarChar(255)
-  icon  String
+  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name String @db.VarChar(255)
+  icon String
+
   Score Score[]
 }
 
 model Wheel {
-  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name  String  @db.VarChar(255)
-  icon  String
+  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name String @db.VarChar(255)
+  icon String
+
   Score Score[]
 }
 
 model Wing {
-  id    String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name  String  @db.VarChar(255)
-  icon  String
+  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name String @db.VarChar(255)
+  icon String
+
   Score Score[]
 }
 
@@ -51,33 +56,50 @@ model Cup {
 model Score {
   id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
 
-  user  User  @relation(fields: [userId], references: [id])
-  kart  Kart  @relation(fields: [kartId], references: [id])
-  wheel Wheel @relation(fields: [wheelId], references: [id])
-  wing  Wing  @relation(fields: [wingId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  driver Driver @relation(fields: [driverId], references: [id])
+  kart   Kart   @relation(fields: [kartId], references: [id])
+  wheel  Wheel  @relation(fields: [wheelId], references: [id])
+  wing   Wing   @relation(fields: [wingId], references: [id])
+  match  Match  @relation(fields: [matchId], references: [id])
 
-  userId  String @db.Uuid
-  kartId  String @db.Uuid
-  wheelId String @db.Uuid
-  wingId  String @db.Uuid
-
-  Match   Match  @relation(fields: [matchId], references: [id])
-  matchId String @db.Uuid
+  matchId  String @db.Uuid
+  userId   String @db.Uuid
+  driverId String @db.Uuid
+  kartId   String @db.Uuid
+  wheelId  String @db.Uuid
+  wingId   String @db.Uuid
 }
 
 model Match {
   id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
 
-  cup   Cup    @relation(fields: [cupId], references: [id])
-  cupId String @db.Uuid
+  cup        Cup        @relation(fields: [cupId], references: [id])
+  tournament Tournament @relation(fields: [tournamentId], references: [id])
 
-  scores     Score[]
+  cupId        String @db.Uuid
+  tournamentId String @db.Uuid
+
+  scores     Score[] // A match may have a score per player
   difficulty Int
 }
 
-model User {
-  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name String @db.VarChar(255)
+model Tournament {
+  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
 
-  scores Score[]
+  matches      Match[]
+  participants User[]  @relation("match_participant")
+  invites      User[]  @relation("match_invited")
+}
+
+model User {
+  id             String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String @db.VarChar(255)
+  email          String @unique
+  password       String
+  profilePicture String
+
+  scores          Score[]
+  invites         Tournament[] @relation("match_invited")
+  participatingIn Tournament[] @relation("match_participant")
 }
