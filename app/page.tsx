@@ -1,11 +1,18 @@
 "use client";
 
-import getUser from "@/lib/actions/getUser";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 import useProtected from "./ui/hooks/useProtected";
+import useSelectedWheel from "@/app/ui/hooks/useSelectedWheel";
+import useSelectedKart from "@/app/ui/hooks/useSelectedKart";
+import useSelectedWing from "@/app/ui/hooks/useSelectedWing";
+import useSelectedDriver from "./ui/hooks/useSelectedDriver";
+import Profile from "./ui/components/Dashboard/Profile";
+import Nav from "./ui/components/Dashboard/Nav";
+import Loader from "./ui/components/Loader";
+
+const placeholderAlt = "Cargando";
+const placeholderImage = "/assets/placeholder.png";
 
 const Podium = ({
   name,
@@ -25,61 +32,32 @@ const Podium = ({
   );
 };
 
-const CharacterKartDisplay = () => {
-  return (
-    <section className="bg-white-transparent mb-2 p-4 rounded-lg flex flex-row text-black justify-between items-center">
-      <Link href="/character" className="bg-white-transparent rounded-lg">
-        <Image
-          src="/assets/icons/mario.webp"
-          alt="Mario"
-          width={80}
-          height={80}
-        ></Image>
-      </Link>
-      <div className="flex flex-row gap-2">
-        <Link href="/kart" className="bg-white-transparent rounded-lg">
-          <Image
-            src="/assets/icons/mario.webp"
-            alt="Mario"
-            width={68}
-            height={68}
-          ></Image>
-        </Link>
-        <Link href="/kart" className="bg-white-transparent rounded-lg">
-          <Image
-            src="/assets/icons/mario.webp"
-            alt="Mario"
-            width={68}
-            height={68}
-          ></Image>
-        </Link>
-        <Link href="/kart" className="bg-white-transparent rounded-lg">
-          <Image
-            src="/assets/icons/mario.webp"
-            alt="Mario"
-            width={68}
-            height={68}
-          ></Image>
-        </Link>
-      </div>
-    </section>
-  );
-};
-
 export default function Home() {
-  const userId = useProtected();
+  const user = useProtected();
+  const wheel = useSelectedWheel();
+  const kart = useSelectedKart();
+  const wing = useSelectedWing();
+  const driver = useSelectedDriver();
 
   return (
-    <main className="flex flex-col p-2 gap-2">
-      <section>
-        <Image
-          src="/assets/full/mario.webp"
-          priority
-          alt="Mario"
-          width={1000}
-          height={871}
-        ></Image>
-      </section>
+    <main className="flex flex-col p-2 gap-2 pb-52">
+      <Profile user={user} />
+
+      {driver ? (
+        <section className="flex flex-col justify-center items-center w-full aspect-square">
+          <Image
+            src={driver?.full_image ?? placeholderImage}
+            priority
+            alt={driver?.name ?? placeholderAlt}
+            width={1000}
+            height={871}
+          />
+        </section>
+      ) : (
+        <div className="relative w-full aspect-square">
+          <Loader />
+        </div>
+      )}
 
       <section className="bg-white rounded-xl p-4 text-black">
         <h3 className="text-center text-accent-yellow font-bold text-2xl pb-2">
@@ -121,14 +99,7 @@ export default function Home() {
         </h3>
       </section>
 
-      <section className="fixed bottom-2 left-2 right-2">
-        <CharacterKartDisplay></CharacterKartDisplay>
-        <div className="relative">
-          <button className="button-red rounded-lg bg-accent-yellow w-full h-16 font-bold text-lg text-mk-red">
-            Añadir puntuación
-          </button>
-        </div>
-      </section>
+      <Nav driver={driver} kart={kart} wheel={wheel} wing={wing} />
     </main>
   );
 }

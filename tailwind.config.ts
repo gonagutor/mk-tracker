@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         "white-transparent": "#ffffff30",
+        "white-less-transparent": "#ffffff90",
         "mk-red": "#f22f31",
         "accent-blue": "#00a4e9",
         "accent-yellow": "#fec202",
