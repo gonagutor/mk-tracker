@@ -1,3 +1,5 @@
+import { Tournament } from "@prisma/client";
+
 export type Driver = {
   id: string;
   name: string;
@@ -29,4 +31,9 @@ export type UserWithoutPassword = {
   email: string;
   password?: string;
   profilePicture?: string;
+};
+
+export type UserWithData = UserWithoutPassword & {
+  invites: Tournament[];
+  participatingIn: Tournament[];
 };

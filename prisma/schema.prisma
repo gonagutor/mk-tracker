@@ -72,7 +72,8 @@ model Score {
 }
 
 model Match {
-  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id   String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  date DateTime
 
   cup        Cup        @relation(fields: [cupId], references: [id])
   tournament Tournament @relation(fields: [tournamentId], references: [id])
@@ -85,7 +86,13 @@ model Match {
 }
 
 model Tournament {
-  id String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  id    String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name  String
+  start DateTime
+  end   DateTime
+
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId String @db.Uuid
 
   matches      Match[]
   participants User[]  @relation("match_participant")
@@ -93,13 +100,14 @@ model Tournament {
 }
 
 model User {
-  id             String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name           String @db.VarChar(255)
-  email          String @unique
+  id             String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String  @db.VarChar(255)
+  email          String  @unique
   password       String
   profilePicture String?
 
-  scores          Score[]
-  invites         Tournament[] @relation("match_invited")
-  participatingIn Tournament[] @relation("match_participant")
+  scores             Score[]
+  createdTournaments Tournament[]
+  invites            Tournament[] @relation("match_invited")
+  participatingIn    Tournament[] @relation("match_participant")
 }

@@ -10,6 +10,9 @@ import useSelectedDriver from "./ui/hooks/useSelectedDriver";
 import Profile from "./ui/components/Dashboard/Profile";
 import Nav from "./ui/components/Dashboard/Nav";
 import Loader from "./ui/components/Loader";
+import useSelectedTournament from "./ui/hooks/useSelectedTournament";
+import { Tournament } from "@prisma/client";
+import Link from "next/link";
 
 const placeholderAlt = "Cargando";
 const placeholderImage = "/assets/placeholder.png";
@@ -32,12 +35,57 @@ const Podium = ({
   );
 };
 
+const TournamentView = () => (
+  <>
+    <section className="bg-white rounded-xl p-4 text-black">
+      <h3 className="text-center text-accent-yellow font-bold text-2xl pb-2">
+        Posición global
+      </h3>
+      <div className="flex flex-col gap-4">
+        {["Gonzalo", "Alba", "Diego"].map((v, index) => (
+          <Podium key={v} name={v} position={index} />
+        ))}
+      </div>
+    </section>
+
+    <section className="bg-white rounded-xl p-4 text-black">
+      <h3 className="text-center text-accent-blue font-bold text-2xl pb-2">
+        Gráfico de mejora
+      </h3>
+      {/*<Chart
+  type="line"
+  data={{
+    datasets: [
+      {
+        data: [48, 55, 22],
+        label: "teszt",
+        backgroundColor: [
+          "rgba(255, 255, 255, 0.6)",
+          "rgba(255, 255, 255, 0.6)",
+          "rgba(255, 255, 255, 0.6)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }}
+></Chart>*/}
+    </section>
+
+    <section className="bg-white rounded-xl p-4 text-black">
+      <h3 className="text-center text-accent-pink font-bold text-2xl pb-2">
+        Últimas copas
+      </h3>
+    </section>
+  </>
+);
+
 export default function Home() {
   const user = useProtected();
   const wheel = useSelectedWheel();
   const kart = useSelectedKart();
   const wing = useSelectedWing();
   const driver = useSelectedDriver();
+  const [tournament] = useSelectedTournament();
 
   return (
     <main className="flex flex-col p-2 gap-2 pb-52">
@@ -59,45 +107,24 @@ export default function Home() {
         </div>
       )}
 
-      <section className="bg-white rounded-xl p-4 text-black">
-        <h3 className="text-center text-accent-yellow font-bold text-2xl pb-2">
-          Posición global
-        </h3>
-        <div className="flex flex-col gap-4">
-          {["Gonzalo", "Alba", "Diego"].map((v, index) => (
-            <Podium key={v} name={v} position={index} />
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-white rounded-xl p-4 text-black">
-        <h3 className="text-center text-accent-blue font-bold text-2xl pb-2">
-          Gráfico de mejora
-        </h3>
-        {/*<Chart
-          type="line"
-          data={{
-            datasets: [
-              {
-                data: [48, 55, 22],
-                label: "teszt",
-                backgroundColor: [
-                  "rgba(255, 255, 255, 0.6)",
-                  "rgba(255, 255, 255, 0.6)",
-                  "rgba(255, 255, 255, 0.6)",
-                ],
-                borderWidth: 1,
-              },
-            ],
-          }}
-        ></Chart>*/}
-      </section>
-
-      <section className="bg-white rounded-xl p-4 text-black">
-        <h3 className="text-center text-accent-pink font-bold text-2xl pb-2">
-          Últimas copas
-        </h3>
-      </section>
+      {tournament ? (
+        <TournamentView />
+      ) : (
+        <section className="bg-white rounded-xl p-4 text-black">
+          <h1>Ningún torneo seleccionado</h1>
+          {(user?.participatingIn ?? new Array<Tournament>()).map(
+            (tournament) => (
+              <button key={tournament.id}>{tournament.name}</button>
+            )
+          )}
+          <Link
+            href="/tournament/create"
+            className="flex items-center justify-center relative w-full h-16 mt-4 button-white bg-accent-blue text-white rounded-xl font-bold text-lg"
+          >
+            Crear torneo
+          </Link>
+        </section>
+      )}
 
       <Nav driver={driver} kart={kart} wheel={wheel} wing={wing} />
     </main>

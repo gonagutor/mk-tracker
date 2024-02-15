@@ -1,13 +1,13 @@
 import checkToken from "@/lib/actions/auth/checkToken";
 import getUserById from "@/lib/actions/getUserById";
 import { TOKEN_KEY } from "@/lib/constants";
-import { UserWithoutPassword } from "@/lib/definitions";
+import { UserWithData } from "@/lib/definitions";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function useProtected() {
   const router = useRouter();
-  const [user, setUser] = useState<UserWithoutPassword>();
+  const [user, setUser] = useState<UserWithData>();
 
   const onFail = () => {
     localStorage.removeItem(TOKEN_KEY);
@@ -22,7 +22,7 @@ export default function useProtected() {
       .then((result) => {
         getUserById(result as string)
           .then((user) => {
-            const finalUser = user as UserWithoutPassword;
+            const finalUser = user as UserWithData;
             delete finalUser.password;
             setUser(finalUser);
           })

@@ -9,6 +9,7 @@ import getKarts from "@/lib/actions/getKarts";
 import Selector from "@/app/ui/components/Selector";
 import { KART_KEY, WHEEL_KEY, WING_KEY } from "@/lib/constants";
 import useProtected from "../ui/hooks/useProtected";
+import RaceTitle from "../ui/components/RaceTitle";
 
 export default function KartSelect() {
   useProtected();
@@ -39,9 +40,9 @@ export default function KartSelect() {
 
   return (
     <main className="relative">
-      <div className="text-mk-red font-bold text-2xl checkered-background text-center skew py-4 my-4">
+      <RaceTitle>
         <h2>Selecciona tu coche</h2>
-      </div>
+      </RaceTitle>
       <section
         className="fixed top-1/3 left-0 right-0 mx-2 grid grid-cols-3 h-72 bg-white-transparent rounded-xl p-2 self-center"
         style={{
