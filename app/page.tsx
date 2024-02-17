@@ -112,14 +112,15 @@ export default function Home() {
       ) : (
         <section className="bg-white rounded-xl p-4 text-black">
           <h1>Ningún torneo seleccionado</h1>
-          {(user?.participatingIn ?? new Array<Tournament>()).map(
-            (tournament) => (
-              <button key={tournament.id}>{tournament.name}</button>
-            )
-          )}
+          <Link
+            href="/profile"
+            className="flex items-center justify-center relative w-full h-16 mt-4 button-white bg-accent-yellow text-white rounded-xl font-bold text-lg"
+          >
+            Seleccionar Torneo
+          </Link>
           <Link
             href="/tournament/create"
-            className="flex items-center justify-center relative w-full h-16 mt-4 button-white bg-accent-blue text-white rounded-xl font-bold text-lg"
+            className="flex items-center justify-center relative w-full h-16 mt-2 button-white bg-accent-blue text-white rounded-xl font-bold text-lg"
           >
             Crear torneo
           </Link>
