@@ -1,4 +1,4 @@
-import getWheelById from "@/lib/actions/getWheelById";
+import getWheelById from "@/lib/actions/wheel/getWheelById";
 import { WHEEL_KEY } from "@/lib/constants";
 import { Wheel } from "@prisma/client";
 import { useEffect, useState } from "react";

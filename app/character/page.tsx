@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import DriverSelector from "@/app/ui/components/DriverSelector";
 import { Driver } from "@/lib/definitions";
 import { DRIVER_KEY } from "@/lib/constants";
-import getDrivers from "@/lib/actions/getDrivers";
+import getDrivers from "@/lib/actions/driver/getDrivers";
 import Loader from "@/app/ui/components/Loader";
 import SearchBox from "@/app/ui/components/SearchBox";
 import useProtected from "../ui/hooks/useProtected";

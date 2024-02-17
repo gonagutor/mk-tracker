@@ -1,5 +1,5 @@
 import checkToken from "@/lib/actions/auth/checkToken";
-import getUserById from "@/lib/actions/getUserById";
+import getUserById from "@/lib/actions/auth/getUserById";
 import { TOKEN_KEY } from "@/lib/constants";
 import { UserWithData } from "@/lib/definitions";
 import { useRouter } from "next/navigation";

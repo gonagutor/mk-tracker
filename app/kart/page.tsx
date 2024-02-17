@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Kart, Wheel, Wing } from "@prisma/client";
 
-import getWings from "@/lib/actions/getWings";
-import getWheels from "@/lib/actions/getWheels";
-import getKarts from "@/lib/actions/getKarts";
+import getWings from "@/lib/actions/wing/getWings";
+import getWheels from "@/lib/actions/wheel/getWheels";
+import getKarts from "@/lib/actions/kart/getKarts";
 import Selector from "@/app/ui/components/Selector";
 import { KART_KEY, WHEEL_KEY, WING_KEY } from "@/lib/constants";
 import useProtected from "../ui/hooks/useProtected";

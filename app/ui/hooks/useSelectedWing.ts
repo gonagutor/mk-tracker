@@ -1,4 +1,4 @@
-import getWingById from "@/lib/actions/getWingById";
+import getWingById from "@/lib/actions/wing/getWingById";
 import { WING_KEY } from "@/lib/constants";
 import { Wing } from "@prisma/client";
 import { useEffect, useState } from "react";

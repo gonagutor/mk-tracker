@@ -1,4 +1,4 @@
-import getKartById from "@/lib/actions/getKartById";
+import getKartById from "@/lib/actions/kart/getKartById";
 import { KART_KEY } from "@/lib/constants";
 import { Kart } from "@prisma/client";
 import { useEffect, useState } from "react";

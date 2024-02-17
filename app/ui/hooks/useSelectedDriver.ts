@@ -1,4 +1,4 @@
-import getDriverById from "@/lib/actions/getDriverById";
+import getDriverById from "@/lib/actions/driver/getDriverById";
 import { DRIVER_KEY } from "@/lib/constants";
 import { Driver } from "@prisma/client";
 import { useEffect, useState } from "react";
