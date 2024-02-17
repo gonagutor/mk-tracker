@@ -3,25 +3,25 @@ import rejectInvite from "@/lib/actions/tournament/rejectInvite";
 import { TOKEN_KEY } from "@/lib/constants";
 import { useState } from "react";
 
-export default function useRejectAcceptInvite(
-  tournamentId: string
-): [() => void, () => void, string | undefined] {
+export default function useRejectAcceptInvite(tournamentId: string) {
   const [error, setError] = useState();
   const token = localStorage.getItem(TOKEN_KEY);
 
-  const accept = () => {
+  const accept = (onFinished?: VoidFunction) => {
     if (!token) return;
     acceptInvite(token, tournamentId)
       .then(() => setError(undefined))
-      .catch((e) => setError(e.message));
+      .catch((e) => setError(e.message))
+      .finally(onFinished);
   };
 
-  const reject = () => {
+  const reject = (onFinished?: VoidFunction) => {
     if (!token) return;
     rejectInvite(token, tournamentId)
       .then(() => setError(undefined))
-      .catch((e) => setError(e.message));
+      .catch((e) => setError(e.message))
+      .finally(onFinished);
   };
 
-  return [accept, reject, error];
+  return { accept, reject, error };
 }

@@ -10,12 +10,14 @@ import useProtected from "@/app/ui/hooks/useProtected";
 import RaceTitle from "@/app/ui/components/RaceTitle";
 import TournamentList from "@/app/ui/components/Profile/TournamentList";
 import InvitesList from "../ui/components/Profile/InvitesList";
+import updateUser from "@/lib/actions/auth/updateUser";
+import { TOKEN_KEY } from "@/lib/constants";
 
 const placeholderAlt = "Cargando";
 const placeholderImage = "/assets/placeholder.png";
 
 export default function ProfilePage() {
-  const user = useProtected();
+  const { user, refreshUser } = useProtected();
   const filePickerRef = createRef<HTMLInputElement>();
 
   const onSelectImage: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -35,7 +37,13 @@ export default function ProfilePage() {
     if (!newProfilePic) return;
 
     convertBase64(newProfilePic)
-      .then((base64ProfilePic) => console.log(base64ProfilePic))
+      .then((base64ProfilePic) =>
+        updateUser(localStorage.getItem(TOKEN_KEY)!, {
+          profilePicture: base64ProfilePic as string,
+        })
+          .then(refreshUser)
+          .catch(refreshUser)
+      )
       .catch(() => console.log("error reading image"));
   };
 
@@ -63,6 +71,7 @@ export default function ProfilePage() {
         >
           <Image
             priority
+            className="rounded-full"
             width={1024}
             height={1024}
             alt={user?.name ?? placeholderAlt}
@@ -81,7 +90,7 @@ export default function ProfilePage() {
       </section>
 
       <TournamentList user={user} />
-      <InvitesList user={user} />
+      <InvitesList refreshUser={refreshUser} user={user} />
     </main>
   );
 }

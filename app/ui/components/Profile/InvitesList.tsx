@@ -5,8 +5,14 @@ import { Tournament } from "@prisma/client";
 import moment from "moment";
 import useRejectAcceptInvite from "../../hooks/useRejectAcceptInvite";
 
-const InvitesItem = ({ invite }: { invite: Tournament }) => {
-  const [accept, reject, error] = useRejectAcceptInvite(invite.id);
+const InvitesItem = ({
+  invite,
+  refreshUser,
+}: {
+  invite: Tournament;
+  refreshUser: VoidFunction;
+}) => {
+  const { accept, reject } = useRejectAcceptInvite(invite.id);
 
   return (
     <div className="flex flex-row justify-between items-center p-4 bg-gray-100 text-black rounded-xl">
@@ -19,13 +25,13 @@ const InvitesItem = ({ invite }: { invite: Tournament }) => {
       </div>
       <div className="flex flex-row gap-2">
         <button
-          onClick={() => reject()}
+          onClick={() => reject(refreshUser)}
           className="h-12 w-12 rounded-full bg-accent-pink text-white"
         >
           <FontAwesomeIcon className="p-4" icon={faX} />
         </button>
         <button
-          onClick={() => accept()}
+          onClick={() => accept(refreshUser)}
           className="h-12 w-12 rounded-full bg-accent-blue text-white"
         >
           <FontAwesomeIcon className="p-4" icon={faCheck} />
@@ -37,12 +43,17 @@ const InvitesItem = ({ invite }: { invite: Tournament }) => {
 
 export default function InvitesList({
   user,
-}: Readonly<{ user: UserWithData | undefined }>) {
+  refreshUser,
+}: Readonly<{ user: UserWithData | undefined; refreshUser: VoidFunction }>) {
   return (
     <section className="flex flex-col m-4 gap-2 bg-white text-black rounded-xl p-4">
       <h1 className="font-bold text-xl mb-2">Invitaciones en espera</h1>
       {(user?.invites ?? []).map((invite) => (
-        <InvitesItem key={invite.id} invite={invite} />
+        <InvitesItem
+          key={invite.id}
+          invite={invite}
+          refreshUser={refreshUser}
+        />
       ))}
     </section>
   );

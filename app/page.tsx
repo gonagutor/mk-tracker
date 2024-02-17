@@ -80,7 +80,7 @@ const TournamentView = () => (
 );
 
 export default function Home() {
-  const user = useProtected();
+  const { user } = useProtected();
   const wheel = useSelectedWheel();
   const kart = useSelectedKart();
   const wing = useSelectedWing();

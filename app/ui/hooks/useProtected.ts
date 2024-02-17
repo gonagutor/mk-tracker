@@ -7,16 +7,20 @@ import { useEffect, useState } from "react";
 
 export default function useProtected() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
   const [user, setUser] = useState<UserWithData>();
 
-  const onFail = () => {
+  const onFail = (e: Error) => {
     localStorage.removeItem(TOKEN_KEY);
     router.replace("/login");
+    setError(e.message);
+    setLoading(false);
   };
 
-  useEffect(() => {
+  const refreshUser = () => {
     const token = localStorage.getItem(TOKEN_KEY);
-    if (!token) return onFail();
+    if (!token) return onFail(new Error("No hay un token"));
 
     checkToken(token)
       .then((result) => {
@@ -25,11 +29,15 @@ export default function useProtected() {
             const finalUser = user as UserWithData;
             delete finalUser.password;
             setUser(finalUser);
+            setLoading(false);
+            setError(undefined);
           })
           .catch(onFail);
       })
       .catch(onFail);
-  }, []);
+  };
 
-  return user;
+  useEffect(refreshUser, []);
+
+  return { user, refreshUser, loading, error };
 }
