@@ -2,12 +2,7 @@
 
 import { ChangeEventHandler, createRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faCross,
-  faLeftLong,
-  faPen,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong, faPen } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -74,7 +69,7 @@ export default function ProfilePage() {
             src={user?.profilePicture ?? placeholderImage}
           />
           <FontAwesomeIcon
-            className="absolute bottom-6 right-6 bg-accent-blue h-8 w-8 p-4  rounded-full"
+            className="absolute bottom-6 right-6 bg-accent-blue min-w-8 min-h-8 h-8 w-8 p-4 rounded-full"
             size="2x"
             icon={faPen}
           />
