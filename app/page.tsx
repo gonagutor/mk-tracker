@@ -85,7 +85,7 @@ export default function Home() {
   const kart = useSelectedKart();
   const wing = useSelectedWing();
   const driver = useSelectedDriver();
-  const [tournament] = useSelectedTournament();
+  const { tournament } = useSelectedTournament();
 
   return (
     <main className="flex flex-col p-2 gap-2 pb-52">

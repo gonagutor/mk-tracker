@@ -1,4 +1,5 @@
 import { Tournament } from "@prisma/client";
+import getTournamentById from "./actions/tournament/getTournamentById";
 
 export type Driver = {
   id: string;
@@ -37,3 +38,5 @@ export type UserWithData = UserWithoutPassword & {
   invites: Tournament[];
   participatingIn: Tournament[];
 };
+
+export type TournamentWithData = Awaited<ReturnType<typeof getTournamentById>>;

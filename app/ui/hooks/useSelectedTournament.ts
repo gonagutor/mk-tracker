@@ -4,9 +4,10 @@ import { Tournament } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export default function useSelectedTournament() {
-  const [tournament, setTournament] = useState<Tournament>();
+  const [tournament, setTournament] =
+    useState<Awaited<ReturnType<typeof getTournamentById>>>();
 
-  const refreshSelectedTournament = () => {
+  const refreshTournament = () => {
     const tournamentId = localStorage.getItem(TOURNAMENT_KEY);
     if (!tournamentId) {
       if (tournament) setTournament(undefined);
@@ -21,7 +22,7 @@ export default function useSelectedTournament() {
       });
   };
 
-  useEffect(refreshSelectedTournament, []);
+  useEffect(refreshTournament, []);
 
-  return [tournament, refreshSelectedTournament];
+  return { tournament, refreshTournament };
 }
